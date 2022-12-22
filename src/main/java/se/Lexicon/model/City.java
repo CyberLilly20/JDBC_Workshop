@@ -20,7 +20,8 @@ public class City {
         this.population = population;
     }
 
-
+    public City() {
+    }
     // setters & getters
 
     public int getId() {
@@ -67,5 +68,14 @@ public class City {
     // override methods
 
 
-
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", district='" + district + '\'' +
+                ", population=" + population +
+                '}';
+    }
 }
