@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="16b6f458-dce3-4118-a4a5-04033cb46d98" name="Changes" comment="added">
+    <list default="true" id="16b6f458-dce3-4118-a4a5-04033cb46d98" name="Changes" comment="add">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/Lexicon/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/Lexicon/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/se/Lexicon/MySQLConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/Lexicon/MySQLConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/Lexicon/dao/CityDaoJDBC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/Lexicon/dao/CityDaoJDBC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/se/Lexicon/model/City.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/se/Lexicon/model/City.java" afterDir="false" />
     </list>
@@ -59,7 +57,13 @@
       <option name="presentableId" value="LOCAL−00001" />
       <updated>1671623133886</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL−00002" summary="add">
+      <created>1671708750196</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1671708750196</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -75,6 +79,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added" />
-    <option name="LAST_COMMIT_MESSAGE" value="added" />
+    <MESSAGE value="add" />
+    <option name="LAST_COMMIT_MESSAGE" value="add" />
   </component>
 </project>

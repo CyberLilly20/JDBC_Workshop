@@ -5,10 +5,8 @@ import se.Lexicon.MySQLConnection;
 import se.Lexicon.exception.DBConnectionException;
 import se.Lexicon.model.City;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CityDaoJDBC implements CityDao {
@@ -23,18 +21,18 @@ public class CityDaoJDBC implements CityDao {
         try (
                 Connection connection = MySQLConnection.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                ) {
-            preparedStatement.setInt(1,id);
+        ) {
+            preparedStatement.setInt(1, id);
 
             try (ResultSet resultSet = preparedStatement.executeQuery();) {
 
-            while (resultSet.next()){
-               city.setId(resultSet.getInt(1));
-               city.setName(resultSet.getString(2));
-               city.setCountryCode(resultSet.getString(3));
-               city.setDistrict(resultSet.getString(4));
-               city.setPopulation(resultSet.getInt(5));
-            }
+                while (resultSet.next()) {
+                    city.setId(resultSet.getInt(1));
+                    city.setName(resultSet.getString(2));
+                    city.setCountryCode(resultSet.getString(3));
+                    city.setDistrict(resultSet.getString(4));
+                    city.setPopulation(resultSet.getInt(5));
+                }
             }
 
         } catch (DBConnectionException | SQLException e) {
@@ -56,29 +54,158 @@ public class CityDaoJDBC implements CityDao {
     }
 
     public List<City> findByCode(String code) {
+        String query = "select * from city where CountryCode = ? ";
+        List<City> cities = new ArrayList<>();
+        try (
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, code);
+            // get the results from database
+            try (ResultSet resultSet = preparedStatement.executeQuery();) {
+                //go over the results
+                while (resultSet.next()) {
+                    City city = new City();
+                    city.setId(resultSet.getInt(1));
+                    city.setName(resultSet.getString(2));
+                    city.setCountryCode(resultSet.getString(3));
+                    city.setDistrict(resultSet.getString(4));
+                    city.setPopulation(resultSet.getInt(5));
+                    cities.add(city);
+                }
+            }
+
+        } catch (DBConnectionException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
 
-
-        return null;
+        return cities;
     }
 
     public List<City> findByName(String name) {
-        return null;
+        String query = "select * from city where Name = ? ";
+        List<City> cities = new ArrayList<>();
+        try (
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+            preparedStatement.setString(1, name);
+            // get the results from database
+            try (ResultSet resultSet = preparedStatement.executeQuery();) {
+                //go over the results
+                while (resultSet.next()) {
+                    City city = new City();
+                    city.setId(resultSet.getInt(1));
+                    city.setName(resultSet.getString(2));
+                    city.setCountryCode(resultSet.getString(3));
+                    city.setDistrict(resultSet.getString(4));
+                    city.setPopulation(resultSet.getInt(5));
+                    cities.add(city);
+                }
+            }
+
+        } catch (DBConnectionException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return cities;
     }
 
     public List<City> findAll() {
-        return null;
+        String query = "select * from city ";
+        List<City> cities = new ArrayList<>();
+        try (
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ) {
+
+            // get the results from database
+            try (ResultSet resultSet = preparedStatement.executeQuery();) {
+                //go over the results
+                while (resultSet.next()) {
+                    City city = new City();
+                    city.setId(resultSet.getInt(1));
+                    city.setName(resultSet.getString(2));
+                    city.setCountryCode(resultSet.getString(3));
+                    city.setDistrict(resultSet.getString(4));
+                    city.setPopulation(resultSet.getInt(5));
+                    cities.add(city);
+                }
+            }
+
+        } catch (DBConnectionException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return cities;
     }
 
     public City add(City city) {
+        String query = "insert into city (Name, CountryCode, District, Population) values (?, ?, ?, ?)";
+        try (
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+        ) {
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryCode());
+            preparedStatement.setString(3, city.getDistrict());
+            preparedStatement.setInt(4, city.getPopulation());
+
+            preparedStatement.executeUpdate();
+            try (ResultSet resultSet = preparedStatement.getGeneratedKeys();) {
+                if (resultSet.next()) {
+                    return this.findById(resultSet.getInt(1));
+                }
+            }
+        } catch (DBConnectionException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
         return null;
     }
 
     public City update(City city) {
+        String query = "update city set Name = ?, CountryCode = ?, District = ?, Population = ? where id = ? ";
+        try (
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        ) {
+            preparedStatement.setString(1, city.getName());
+            preparedStatement.setString(2, city.getCountryCode());
+            preparedStatement.setString(3, city.getDistrict());
+            preparedStatement.setInt(4, city.getPopulation());
+            preparedStatement.setInt(5, city.getId());
+
+            preparedStatement.executeUpdate();
+
+            return this.findById(city.getId());
+
+        } catch (DBConnectionException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 
     public int delete(City city) {
+        String query = "delete from city where id = ?";
+        try (
+                Connection connection = MySQLConnection.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+        ) {
+
+            preparedStatement.setInt(1, city.getId());
+
+            preparedStatement.executeUpdate();
+            return 1;
+
+        } catch (DBConnectionException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
         return 0;
     }
 }
